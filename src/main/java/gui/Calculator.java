@@ -18,7 +18,7 @@ public class Calculator extends VBox implements EventHandler<ActionEvent>{
 	String number2 = "";
 	String operator;
 	Text displayText;
-	boolean bandera;
+	boolean band = false;
 	
 	public Calculator(){
 		super(10);
@@ -121,6 +121,7 @@ public class Calculator extends VBox implements EventHandler<ActionEvent>{
 		reset.setOnAction(this);
 		
 		this.getChildren().addAll(sp, gd);
+
 	}
 
 	@Override
@@ -129,29 +130,29 @@ public class Calculator extends VBox implements EventHandler<ActionEvent>{
 		Button b = (Button) event.getSource();
 		String value = b.getText();
 
-		if (value.equals("/") || value.equals("+") || value.equals("-") || value.equals("*")){
-			operator = value;
-			bandera = true;
+		if (value.equals("/")|| value.equals("*") || value.equals("-") || value.equals("+")){
+			displayText.setText(operator = value);
+			band = true;
 		}else if (!value.equals("=") && !value.equals("C")){
-			if (!bandera) number1+=value; else number2+=value;
+			if (!band) displayText.setText(number1+=value); else displayText.setText(number2+=value);
 		}
 
 		if (value.equals("=")){
 			switch (operator){
-				case "*":
-					displayText.setText(Double.toString(Integer.parseInt(number1) * Integer.parseInt(number2)));
-					break;
 				case "/":
 					displayText.setText(Double.toString((double) Integer.parseInt(number1)/Integer.parseInt(number2)));
 					break;
-				case "+":
-					displayText.setText(Double.toString(Integer.parseInt(number1)+Integer.parseInt(number2)));
+				case "*":
+					displayText.setText(Double.toString(Integer.parseInt(number1) * Integer.parseInt(number2)));
 					break;
 				case "-":
 					displayText.setText(Double.toString(Integer.parseInt(number1)-Integer.parseInt(number2)));
 					break;
+				case "+":
+					displayText.setText(Double.toString(Integer.parseInt(number1)+Integer.parseInt(number2)));
+					break;
 			}
-			bandera = false;
+			band = false;
 			number1 = "";
 			number2 = "";
 		} else if (value.equals("C")) {
